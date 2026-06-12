@@ -16,6 +16,11 @@ public enum TicketStatus {
     PENDING("PENDING", "待处理"),
 
     /**
+     * 已分配，工单已分配给处理人。
+     */
+    ASSIGNED("ASSIGNED", "已分配"),
+
+    /**
      * 处理中，工单已被开始处理。
      */
     PROCESSING("PROCESSING", "处理中"),

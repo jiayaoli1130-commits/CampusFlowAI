@@ -1,5 +1,6 @@
 package com.campusflowai.ticket.vo;
 
+import com.campusflowai.ticket.enums.TicketPriority;
 import com.campusflowai.ticket.enums.TicketStatus;
 import lombok.Data;
 
@@ -25,6 +26,16 @@ public class TicketVO {
      * 工单详细描述。
      */
     private String description;
+
+    /**
+     * 工单分类。
+     */
+    private String category;
+
+    /**
+     * 工单优先级。
+     */
+    private TicketPriority priority;
 
     /**
      * 提交人姓名。

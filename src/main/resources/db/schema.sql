@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS ticket (
     id BIGINT NOT NULL AUTO_INCREMENT COMMENT '工单主键 ID',
     title VARCHAR(100) NOT NULL COMMENT '工单标题',
     description TEXT NOT NULL COMMENT '工单详细描述',
+    category VARCHAR(50) NOT NULL COMMENT '工单分类',
+    priority VARCHAR(20) NOT NULL COMMENT '工单优先级',
     reporter_name VARCHAR(50) NOT NULL COMMENT '提交人姓名',
     reporter_email VARCHAR(100) NOT NULL COMMENT '提交人邮箱',
     status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT '工单状态',

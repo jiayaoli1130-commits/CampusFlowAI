@@ -3,6 +3,7 @@ package com.campusflowai.ticket.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.campusflowai.ticket.enums.TicketPriority;
 import com.campusflowai.ticket.enums.TicketStatus;
 import lombok.Data;
 
@@ -30,6 +31,16 @@ public class Ticket {
      * 工单详细描述。
      */
     private String description;
+
+    /**
+     * 工单分类。
+     */
+    private String category;
+
+    /**
+     * 工单优先级。
+     */
+    private TicketPriority priority;
 
     /**
      * 提交人姓名。
