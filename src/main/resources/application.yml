@@ -9,6 +9,10 @@ spring:
     url: jdbc:mysql://localhost:3306/campusflow_ai?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 1234
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
 
 mybatis-plus:
   configuration:

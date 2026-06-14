@@ -37,6 +37,10 @@ public class TicketVO {
      */
     private TicketPriority priority;
 
+    private Long creatorId;
+
+    private Long assigneeId;
+
     /**
      * 提交人姓名。
      */

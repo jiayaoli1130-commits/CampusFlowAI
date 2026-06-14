@@ -35,4 +35,6 @@ public interface TicketService {
     TicketVO getTicketById(Long id);
 
     TicketVO updateTicketStatus(Long id, TicketStatus status);
+
+    TicketVO assignTicket(Long id, Long assigneeId);
 }

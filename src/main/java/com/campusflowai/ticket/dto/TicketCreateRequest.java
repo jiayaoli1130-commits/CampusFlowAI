@@ -40,6 +40,9 @@ public class TicketCreateRequest {
     @NotNull(message = "工单优先级不能为空")
     private TicketPriority priority;
 
+    @NotNull(message = "提交人 ID 不能为空")
+    private Long creatorId;
+
     /**
      * 提交人姓名。
      */

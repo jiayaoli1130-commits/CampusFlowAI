@@ -1,5 +1,6 @@
 package com.campusflowai.ticket.controller;
 
+import com.campusflowai.ticket.dto.TicketAssignRequest;
 import com.campusflowai.ticket.dto.TicketCreateRequest;
 import com.campusflowai.ticket.dto.TicketStatusUpdateRequest;
 import com.campusflowai.ticket.service.TicketService;
@@ -71,5 +72,12 @@ public class TicketController {
             @PathVariable Long id,
             @Valid @RequestBody TicketStatusUpdateRequest request) {
         return ResponseEntity.ok(ticketService.updateTicketStatus(id, request.getStatus()));
+    }
+
+    @PatchMapping("/{id}/assign")
+    public ResponseEntity<TicketVO> assignTicket(
+            @PathVariable Long id,
+            @Valid @RequestBody TicketAssignRequest request) {
+        return ResponseEntity.ok(ticketService.assignTicket(id, request.getAssigneeId()));
     }
 }

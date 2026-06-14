@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * CampusFlow AI 后端应用启动入口。
  */
-@MapperScan("com.campusflowai.ticket.mapper")
+@MapperScan({"com.campusflowai.ticket.mapper", "com.campusflowai.user.mapper"})
 @SpringBootApplication
 public class CampusFlowAiApplication {
 
