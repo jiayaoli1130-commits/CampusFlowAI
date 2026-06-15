@@ -28,6 +28,21 @@ CREATE TABLE IF NOT EXISTS sys_user (
     updated_at DATETIME NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS ticket_log (
+    id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'Ticket log primary key',
+    ticket_id BIGINT NOT NULL COMMENT 'Ticket ID',
+    operator_id BIGINT NULL COMMENT 'Operator user ID',
+    action VARCHAR(30) NOT NULL COMMENT 'Log action',
+    from_status VARCHAR(20) NULL COMMENT 'Previous ticket status',
+    to_status VARCHAR(20) NULL COMMENT 'Current ticket status',
+    content VARCHAR(500) NULL COMMENT 'Log content',
+    created_at DATETIME NOT NULL COMMENT 'Created time',
+    PRIMARY KEY (id),
+    INDEX idx_ticket_log_ticket_id (ticket_id),
+    INDEX idx_ticket_log_created_at (created_at),
+    INDEX idx_ticket_log_action (action)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Ticket operation log';
+
 SET @creator_column_count = (
     SELECT COUNT(*)
     FROM information_schema.COLUMNS

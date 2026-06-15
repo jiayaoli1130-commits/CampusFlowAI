@@ -6,6 +6,8 @@ import com.campusflowai.ticket.enums.TicketStatus;
 import com.campusflowai.ticket.mapper.TicketMapper;
 import com.campusflowai.ticket.service.TicketService;
 import com.campusflowai.ticket.vo.TicketVO;
+import com.campusflowai.ticketlog.enums.TicketLogAction;
+import com.campusflowai.ticketlog.service.TicketLogService;
 import com.campusflowai.user.entity.User;
 import com.campusflowai.user.enums.UserRole;
 import com.campusflowai.user.mapper.UserMapper;
@@ -26,6 +28,7 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketMapper ticketMapper;
     private final UserMapper userMapper;
+    private final TicketLogService ticketLogService;
 
     @Override
     public TicketVO createTicket(TicketCreateRequest request) {
@@ -53,6 +56,13 @@ public class TicketServiceImpl implements TicketService {
         ticket.setUpdatedAt(now);
 
         ticketMapper.insert(ticket);
+        ticketLogService.createLog(
+                ticket.getId(),
+                ticket.getCreatorId(),
+                TicketLogAction.CREATE,
+                null,
+                ticket.getStatus(),
+                "Ticket created");
         return toVO(ticket);
     }
 
@@ -77,10 +87,18 @@ public class TicketServiceImpl implements TicketService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignee must be STAFF or ADMIN");
         }
 
+        TicketStatus fromStatus = ticket.getStatus();
         ticket.setAssigneeId(assigneeId);
         ticket.setStatus(TicketStatus.ASSIGNED);
         ticket.setUpdatedAt(LocalDateTime.now());
         ticketMapper.updateById(ticket);
+        ticketLogService.createLog(
+                ticket.getId(),
+                assigneeId,
+                TicketLogAction.ASSIGN,
+                fromStatus,
+                ticket.getStatus(),
+                "Ticket assigned");
         return toVO(ticket);
     }
 
@@ -121,7 +139,21 @@ public class TicketServiceImpl implements TicketService {
         ticket.setStatus(status);
         ticket.setUpdatedAt(LocalDateTime.now());
         ticketMapper.updateById(ticket);
+        ticketLogService.createLog(
+                ticket.getId(),
+                getStatusOperatorId(ticket),
+                TicketLogAction.STATUS_CHANGE,
+                currentStatus,
+                status,
+                "Ticket status changed");
         return toVO(ticket);
+    }
+
+    private Long getStatusOperatorId(Ticket ticket) {
+        if (ticket.getAssigneeId() != null) {
+            return ticket.getAssigneeId();
+        }
+        return ticket.getCreatorId();
     }
 
     private boolean isValidStatusTransition(TicketStatus currentStatus, TicketStatus targetStatus) {
